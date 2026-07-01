@@ -902,9 +902,10 @@ ${proj.differentiators.map(d => `- ${d}`).join('\n')}
     // 1. Descargar el README automáticamente
     this.downloadReadme(projName);
     
-    // 2. Extraer descripción y limpiar nombre
+    // 2. Extraer descripción y acortar el nombre del repo (solo tomar antes de ':' o '-')
     const descText = document.querySelector('.modal-desc').textContent.substring(0, 300);
-    const repoName = projName.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-');
+    const shortName = projName.split(/[:\-]/)[0].trim();
+    const repoName = shortName.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     
     // 3. Abrir GitHub con URL pre-llenada
     const githubUrl = `https://github.com/new?name=${encodeURIComponent(repoName)}&description=${encodeURIComponent(descText)}`;
