@@ -98,31 +98,28 @@
         </p>
       </div>
 
-      <div class="features-grid">
-        <div class="feature-card glass reveal reveal-delay-1">
-          <div class="feat-icon"><i data-lucide="target"></i></div>
-          <h3 class="feat-title">1. Elige tu Rol</h3>
-          <p class="feat-desc">
-            Selecciona el puesto al que aspiras: Frontend, Backend, Data Engineer, DevOps, AI/ML, 
-            Mobile, Ciberseguridad o Fullstack.
-          </p>
+      <div class="terminal-wrapper reveal reveal-delay-1">
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="t-btn close"></span>
+            <span class="t-btn minimize"></span>
+            <span class="t-btn expand"></span>
+          </div>
+          <div class="terminal-title">devproject.sh</div>
         </div>
-        <div class="feature-card glass reveal reveal-delay-2">
-          <div class="feature-card-glow"></div>
-          <div class="feat-icon"><i data-lucide="sliders"></i></div>
-          <h3 class="feat-title">2. Define tu Nivel</h3>
-          <p class="feat-desc">
-            Indica si eres principiante, intermedio o avanzado. Los proyectos se ajustan 
-            en complejidad y alcance a tu experiencia.
-          </p>
-        </div>
-        <div class="feature-card glass reveal reveal-delay-3">
-          <div class="feat-icon"><i data-lucide="sparkles"></i></div>
-          <h3 class="feat-title">3. Obtén Proyectos</h3>
-          <p class="feat-desc">
-            Recibe proyectos personalizados con stack técnico, roadmap de desarrollo, 
-            tiempo estimado y pitch listo para entrevistas.
-          </p>
+        <div class="terminal-body">
+          <div class="term-line"><span class="term-prompt">~ ❯</span> <span class="term-cmd">devproject init --rol frontend --nivel avanzado</span></div>
+          <div class="term-line indent text-muted">Analizando perfil... [OK]</div>
+          <div class="term-line indent text-muted">Ajustando complejidad algorítmica... [OK]</div>
+          
+          <div class="term-line mt-2"><span class="term-prompt">~ ❯</span> <span class="term-cmd">devproject generate --count 3</span></div>
+          <div class="term-line indent text-success">✓ Arquitecturas diseñadas exitosamente</div>
+          <div class="term-line indent text-success">✓ Roadmaps y pitches generados</div>
+          
+          <div class="term-line mt-2"><span class="term-prompt">~ ❯</span> <span class="term-cmd">git push origin main</span></div>
+          <div class="term-line indent">Sincronizando con repositorio...</div>
+          <div class="term-line indent text-primary">🚀 ¡Proyecto listo para codificar!</div>
+          <div class="term-line mt-2"><span class="term-prompt blink">_</span></div>
         </div>
       </div>
     </div>

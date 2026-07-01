@@ -687,6 +687,93 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 /* =====================================================
    LEVEL CARDS (Step 2)
    ===================================================== */
+.terminal-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #0d1117; /* GitHub Dark Dimmed background */
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  text-align: left;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #161b22;
+  border-bottom: 1px solid var(--border-medium);
+  position: relative;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.t-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.t-btn.close { background: #ff5f56; }
+.t-btn.minimize { background: #ffbd2e; }
+.t-btn.expand { background: #27c93f; }
+
+.terminal-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e6edf3;
+}
+
+.term-line {
+  margin-bottom: 0.25rem;
+}
+
+.term-line.mt-2 {
+  margin-top: 1.25rem;
+}
+
+.term-line.indent {
+  padding-left: 1.5rem;
+}
+
+.term-prompt {
+  color: #a371f7; /* Purple */
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.term-cmd {
+  color: #79c0ff; /* Blue */
+}
+
+.text-muted { color: #8b949e; }
+.text-success { color: #3fb950; }
+.text-primary { color: #58a6ff; font-weight: 600; }
+
+.blink {
+  animation: blink-caret 1s step-end infinite;
+}
+
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .levels-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1291,45 +1378,7 @@ section {
   justify-content: flex-end;
 }
 
-/* =====================================================
-   FEATURES SECTION
-   ===================================================== */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
 
-.feature-card {
-  padding: 2.5rem 2rem;
-  text-align: left;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-glass-light);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-normal);
-}
-
-.feature-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.01);
-}
-
-.feature-card .feat-icon {
-  margin-bottom: 1.25rem;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background: rgba(99, 102, 241, 0.08);
-  color: var(--accent-indigo);
-}
-.feature-card .feat-icon svg { width: 22px; height: 22px; }
-
-.feature-card .feat-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.15rem; margin-bottom: 0.5rem; }
-.feature-card .feat-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
 
 /* =====================================================
    ABOUT SECTION
@@ -1458,7 +1507,7 @@ section {
   .hero-actions { justify-content: center; }
   .hero-stats { justify-content: center; width: 100%; }
   .hero-image-container { order: -1; }
-  .features-grid { grid-template-columns: repeat(2, 1fr); }
+
   .modal-details-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
@@ -1479,7 +1528,7 @@ section {
   .roles-grid { grid-template-columns: repeat(2, 1fr); }
   .levels-grid { grid-template-columns: 1fr; max-width: 350px; }
   .projects-grid { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr; }
+
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-list { grid-template-columns: 1fr; }
   .modal-stats { grid-template-columns: 1fr; }
