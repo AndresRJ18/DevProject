@@ -80,8 +80,8 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
 
             const payload = {
                 anthropic_version: "bedrock-2023-05-31",
-                max_tokens: 1500, // Menos tokens = respuesta mucho más rápida
-                temperature: 0.3, // Menos temperatura = generación más rápida y determinista
+                max_tokens: 3500, // Aumentado para evitar que el JSON se corte a la mitad
+                temperature: 0.3,
                 messages: [{ role: "user", content: prompt }]
             };
 
@@ -96,9 +96,29 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
             const responseBody = JSON.parse(new TextDecoder().decode(response.body));
             const jsonString = responseBody.content[0].text;
             
-            const jsonMatch = jsonString.match(/\{[\s\S]*\}/);
-            const cleanJson = jsonMatch ? jsonMatch[0] : jsonString.replace(/```json\n?|\n?```/g, '').trim();
-            return JSON.parse(cleanJson);
+            try {
+                const jsonMatch = jsonString.match(/\{[\s\S]*\}/);
+                const cleanJson = jsonMatch ? jsonMatch[0] : jsonString.replace(/```json\n?|\n?```/g, '').trim();
+                return JSON.parse(cleanJson);
+            } catch (err) {
+                console.error(`❌ Error parseando variante #${index}. Respuesta cruda:`, jsonString);
+                // Retornar un proyecto de respaldo seguro si la IA falla
+                return {
+                    id: `fallback-${Date.now()}-${index}`,
+                    name: `Proyecto de Respaldo ${index} (IA Ocupada)`,
+                    description: "La IA generó una respuesta incompleta, pero este es un proyecto base para tu rol.",
+                    difficulty: 3,
+                    timeEstimate: "2 semanas",
+                    techStack: skills,
+                    radar: { coding: 70, arch: 60, uiux: 50, db: 60, devops: 40 },
+                    phases: [
+                        { name: "Fase 1: Estructura", tasks: ["Setup inicial"], duration: "1 semana" }
+                    ],
+                    interviewPitch: "Implementé este proyecto utilizando " + skills.join(', ') + ".",
+                    skillsDemonstrated: skills,
+                    differentiators: ["Capacidad de adaptación"]
+                };
+            }
         };
 
         // 3. Ejecutar 3 llamadas a la IA en paralelo (Reduce el tiempo total a un tercio)
