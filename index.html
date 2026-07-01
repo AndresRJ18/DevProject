@@ -34,7 +34,7 @@
       <div class="nav-links" id="nav-links">
         <a href="#features">Características</a>
         <a href="#wizard">Generador</a>
-        <a href="#wizard" class="nav-cta-btn" onclick="startWizard()">Empezar</a>
+        <a href="#wizard" class="nav-cta-btn" onclick="document.getElementById('wizard').scrollIntoView({behavior: 'smooth'})">Empezar</a>
       </div>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
         <span></span><span></span><span></span>
@@ -67,8 +67,8 @@
         </p>
 
         <div class="hero-actions">
-          <button class="btn btn-primary btn-lg" onclick="startWizard()">
-            ⚡ Generar Proyectos
+          <button class="btn btn-primary btn-lg" onclick="document.getElementById('wizard').scrollIntoView({behavior: 'smooth'})">
+            Generar Proyectos
           </button>
           <button class="btn btn-secondary btn-lg" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
             Saber más
@@ -144,17 +144,9 @@
   <!-- ============================================= -->
   <!-- WIZARD -->
   <!-- ============================================= -->
-  <section class="wizard-section section hidden" id="wizard">
+  <section class="wizard-section section" id="wizard">
     <div class="container">
       <div class="wizard-wrapper">
-        <div class="wizard-progress" id="wizard-progress">
-          <div class="progress-step active" id="step-1-indicator">1</div>
-          <div class="progress-line" id="line-1"></div>
-          <div class="progress-step" id="step-2-indicator">2</div>
-          <div class="progress-line" id="line-2"></div>
-          <div class="progress-step" id="step-3-indicator">3</div>
-        </div>
-
         <!-- Stepper -->
         <div class="wizard-stepper">
           <div class="wizard-step active">

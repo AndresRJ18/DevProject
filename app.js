@@ -358,7 +358,6 @@ class WizardEngine {
   prevStep() { this.goToStep(this.currentStep - 1); }
 
   updateStepper() {
-    // Original Stepper Update
     document.querySelectorAll('.wizard-step').forEach((el, i) => {
       el.classList.remove('active', 'completed');
       if (i < this.currentStep) el.classList.add('completed');
@@ -366,16 +365,6 @@ class WizardEngine {
     });
     document.querySelectorAll('.wizard-connector').forEach((el, i) => {
       el.classList.toggle('filled', i < this.currentStep);
-    });
-
-    // New Progress Bar Update
-    document.querySelectorAll('.progress-step').forEach((el, i) => {
-      el.classList.remove('active', 'completed');
-      if (i < this.currentStep) el.classList.add('completed');
-      if (i === this.currentStep) el.classList.add('active');
-    });
-    document.querySelectorAll('.progress-line').forEach((el, i) => {
-      el.classList.toggle('active', i < this.currentStep);
     });
   }
 
@@ -1197,6 +1186,9 @@ document.addEventListener('DOMContentLoaded', () => {
   wizard = new WizardEngine();
   projectGenerator = new ProjectGenerator();
 
+  // Initialize wizard immediately since it's now visible by default
+  wizard.init();
+
   const canvas = document.getElementById('hero-canvas');
   if (canvas) new ParticleNetwork(canvas);
 
@@ -1211,10 +1203,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setTimeout(() => showToast('Descubre qué proyecto construir para tu portafolio.', 'info'), 1500);
 });
-
-function startWizard() {
-  const section = document.getElementById('wizard');
-  section.classList.remove('hidden');
-  section.scrollIntoView({ behavior: 'smooth' });
-  wizard.init();
-}

@@ -313,14 +313,16 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 
 .hero .container {
   position: relative; z-index: 2;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem;
+  display: flex;
   align-items: center;
+  min-height: 80vh;
 }
 
 .hero-content {
+  width: 50%;
   text-align: left;
+  z-index: 10;
+  position: relative;
 }
 
 .hero-badge {
@@ -399,28 +401,26 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 
 /* Hero Image Container (Right Side) */
 .hero-image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
+  position: absolute;
+  top: 0; right: -2vw;
+  width: 48vw;
   height: 100%;
-  min-height: 500px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  z-index: 1;
 }
 
 .hero-image-frame {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  position: relative;
+  width: 100%; height: 100%;
   overflow: hidden;
-  border-radius: 0;
   /* Efecto de desvanecido hacia el texto y hacia abajo */
-  mask-image: linear-gradient(to right, transparent 0%, black 40%), linear-gradient(to bottom, black 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%), linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 25%), linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%), linear-gradient(to bottom, black 80%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
-  box-shadow: none;
-  border: none;
 }
 
 .hero-image-frame::after {
@@ -435,6 +435,7 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: right center;
   opacity: 0.8;
   transition: transform var(--transition-slow);
 }
