@@ -723,13 +723,7 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   50% { opacity: 0; }
 }
 
-.levels-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  max-width: 780px;
-  margin: 0 auto;
-}
+
 
 
 /* =====================================================
@@ -1657,9 +1651,21 @@ section {
   .nav-links.active { right: 0; }
   .nav-toggle { display: flex; z-index: 1001; }
 
-  .roles-grid { grid-template-columns: repeat(2, 1fr); }
-  .levels-grid { grid-template-columns: 1fr; max-width: 350px; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .roles-grid, .levels-grid { flex-direction: column; align-items: stretch; }
+  .role-card, .level-card, .pill-button { justify-content: center; padding: 1rem; }
+  .projects-grid { display: block; }
+  
+  .vscode-sidebar { display: none; }
+  .vscode-content { padding: 1rem; }
+  .vscode-tab { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
+  
+  .github-export-banner { flex-direction: column; text-align: center; justify-content: center; }
+  .github-export-banner > div { flex-direction: column; text-align: center; gap: 0.5rem; }
+  .github-export-banner img { margin: 0 auto; }
+  
+  .footer-creator-card { flex-direction: column; text-align: center; gap: 1.5rem; justify-content: center; }
+  .creator-profile { flex-direction: column; text-align: center; }
+  .creator-links { flex-wrap: wrap; justify-content: center; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-list { grid-template-columns: 1fr; }
@@ -1673,6 +1679,7 @@ section {
 }
 
 @media (max-width: 480px) {
-  .roles-grid { grid-template-columns: 1fr; }
   .wizard-stepper { transform: scale(0.9); }
+  .md-content h1 { font-size: 1.2rem; }
+  .md-content h3 { font-size: 1rem; }
 }
