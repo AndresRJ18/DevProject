@@ -263,12 +263,12 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
 .nav-cta-btn {
-  padding: 0.55rem 1.4rem;
+  padding: 0.7rem 1.6rem;
   background: var(--gradient-primary);
   border-radius: var(--radius-sm);
   color: white;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   transition: all var(--transition-normal);
   box-shadow: var(--shadow-sm);
 }
