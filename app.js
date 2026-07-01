@@ -324,6 +324,7 @@ class WizardEngine {
     this.selectedRole = null;
     this.selectedLevel = null;
     this.selectedSkills = [];
+    this.themeColor = 'var(--accent-indigo)';
   }
 
   init() {
@@ -368,6 +369,8 @@ class WizardEngine {
     else if (this.currentStep === 3) progress = 100;
 
     laserBar.style.width = `${progress}%`;
+    laserBar.style.background = this.themeColor;
+    laserBar.style.boxShadow = `0 0 10px ${this.themeColor}, 0 0 20px ${this.themeColor}`;
   }
 
   renderStep(step) {
@@ -422,7 +425,7 @@ class WizardEngine {
       <div class="levels-grid">
         ${levels.map(level => `
           <div class="level-card ${this.selectedLevel === level.id ? 'selected' : ''}" 
-               style="--card-color: ${level.color};"
+               style="--card-color: ${this.themeColor};"
                onclick="wizard.selectLevel('${level.id}')">
             <div class="level-icon"><i data-lucide="${level.icon}"></i></div>
             <div class="level-name">${level.name}</div>
@@ -431,7 +434,7 @@ class WizardEngine {
       </div>
       <div class="wizard-nav">
         <button class="pill-button" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
-        <button class="pill-button" style="--card-color: var(--accent-indigo)" onclick="wizard.nextStep()">Siguiente <i data-lucide="arrow-right"></i></button>
+        <button class="pill-button" style="--card-color: ${this.themeColor}" onclick="wizard.nextStep()">Siguiente <i data-lucide="arrow-right"></i></button>
       </div>
     `;
   }
@@ -446,6 +449,7 @@ class WizardEngine {
         <div class="skills-tags">
           ${role.skills.map(skill => `
             <span class="skill-tag ${this.selectedSkills.includes(skill) ? 'selected' : ''}" 
+                  style="--card-color: ${this.themeColor};"
                   onclick="wizard.toggleSkill('${skill}')">
               ${skill}
             </span>
@@ -457,7 +461,7 @@ class WizardEngine {
       </div>
       <div class="wizard-nav">
         <button class="pill-button" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
-        <button class="pill-button special-pill" style="--card-color: var(--accent-cyan)" onclick="wizard.nextStep()"><i data-lucide="sparkles"></i> Generar Proyectos</button>
+        <button class="pill-button special-pill" style="--card-color: ${this.themeColor}" onclick="wizard.nextStep()"><i data-lucide="sparkles"></i> Generar Proyectos</button>
       </div>
     `;
   }
@@ -465,6 +469,11 @@ class WizardEngine {
   selectRole(roleId) {
     this.selectedRole = roleId;
     this.selectedSkills = [];
+    const role = roles.find(r => r.id === roleId);
+    if (role) {
+      this.themeColor = role.color;
+    }
+    
     document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
     const selected = document.querySelector(`.role-card[onclick*="${roleId}"]`);
     if (selected) selected.classList.add('selected');

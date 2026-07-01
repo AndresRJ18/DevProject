@@ -593,7 +593,8 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 .role-card.selected, .level-card.selected, .pill-button.special-pill {
   border-color: var(--card-color, var(--accent-indigo));
   color: white;
-  box-shadow: 0 0 15px rgba(99,102,241,0.3), inset 0 0 10px rgba(99,102,241,0.1);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 30%, transparent), 
+              inset 0 0 10px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 10%, transparent);
   animation: breathe 3s infinite ease-in-out;
 }
 
@@ -602,8 +603,10 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 }
 
 @keyframes breathe {
-  0%, 100% { box-shadow: 0 0 10px rgba(99,102,241,0.2), inset 0 0 5px rgba(99,102,241,0.1); }
-  50% { box-shadow: 0 0 20px rgba(99,102,241,0.5), inset 0 0 15px rgba(99,102,241,0.2); }
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 20%, transparent), 
+                        inset 0 0 5px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 10%, transparent); }
+  50% { box-shadow: 0 0 20px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 50%, transparent), 
+                     inset 0 0 15px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 20%, transparent); }
 }
 
 .role-icon, .level-icon {
@@ -833,10 +836,11 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 }
 
 .skill-tag.selected {
-  background: rgba(99, 102, 241, 0.05);
-  border-color: var(--accent-indigo);
+  background: color-mix(in srgb, var(--card-color, var(--accent-indigo)) 5%, transparent);
+  border-color: var(--card-color, var(--accent-indigo));
   color: white;
-  box-shadow: 0 0 15px rgba(99,102,241,0.3), inset 0 0 10px rgba(99,102,241,0.1);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 30%, transparent), 
+              inset 0 0 10px color-mix(in srgb, var(--card-color, var(--accent-indigo)) 10%, transparent);
   animation: breathe 3s infinite ease-in-out;
 }
 
