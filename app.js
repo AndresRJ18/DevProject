@@ -849,14 +849,13 @@ class ProjectGenerator {
           </div>
 
           <div style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem;"><i data-lucide="github"></i> Inicializar Repositorio (Automático)</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem;"><i data-lucide="github"></i> Setup Rápido de GitHub</p>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-               <input type="password" id="githubToken" placeholder="Pega tu GitHub Token (PAT)" style="flex: 1; padding: 0.5rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-medium); background: rgba(0,0,0,0.2); color: var(--text-primary); font-family: monospace;">
-               <button class="btn btn-primary btn-sm" id="btn-github-create" onclick="projectGenerator.createGithubRepo('${proj.name}')" style="white-space: nowrap;">
-                 <i data-lucide="upload-cloud"></i> Crear Repo en GitHub
+               <button class="btn btn-primary btn-sm" id="btn-github-create" onclick="projectGenerator.createGithubRepo('${proj.name}')" style="white-space: nowrap; width: 100%; justify-content: center;">
+                 <i data-lucide="external-link"></i> Crear Repositorio Pre-llenado en GitHub
                </button>
             </div>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">*Tu token es seguro, viaja directamente a la API de GitHub y no se almacena en ninguna base de datos.</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">*Al hacer clic, se descargará tu README y se abrirá GitHub listo para que guardes tu nuevo proyecto.</p>
           </div>
         </div>
       </div>
@@ -921,45 +920,19 @@ ${proj.differentiators.map(d => `- ${d}`).join('\n')}
     });
   }
 
-  async createGithubRepo(projName) {
-    const token = document.getElementById('githubToken').value.trim();
-    if (!token) return showToast('Por favor, ingresa tu GitHub Token para continuar', 'warning');
-
-    const btn = document.getElementById('btn-github-create');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = `<i data-lucide="loader" style="animation: spin 2s linear infinite;"></i> Creando Repositorio...`;
-    btn.disabled = true;
-
-    try {
-      const readmeContent = document.getElementById('readmeContent').textContent;
-      // Get the description from the generated pitch or description paragraph
-      const descText = document.querySelector('.modal-desc').textContent;
-
-      const res = await fetch('/api/github/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, name: projName, description: descText, readme: readmeContent })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error desconocido al crear repositorio');
-
-      showToast('¡Repositorio creado y README subido con éxito!', 'success');
-      
-      // Cambiar el botón para que lleve al repositorio recién creado
-      btn.innerHTML = `<i data-lucide="external-link"></i> Abrir en GitHub`;
-      btn.onclick = () => window.open(data.url, '_blank');
-      btn.classList.remove('btn-primary');
-      btn.classList.add('btn-secondary');
-      btn.disabled = false;
-      if (window.lucide) window.lucide.createIcons();
-
-    } catch (err) {
-      showToast(err.message, 'error');
-      btn.innerHTML = originalText;
-      btn.disabled = false;
-      if (window.lucide) window.lucide.createIcons();
-    }
+  createGithubRepo(projName) {
+    // 1. Descargar el README automáticamente
+    this.downloadReadme(projName);
+    
+    // 2. Extraer descripción y limpiar nombre
+    const descText = document.querySelector('.modal-desc').textContent.substring(0, 300);
+    const repoName = projName.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-');
+    
+    // 3. Abrir GitHub con URL pre-llenada
+    const githubUrl = `https://github.com/new?name=${encodeURIComponent(repoName)}&description=${encodeURIComponent(descText)}`;
+    window.open(githubUrl, '_blank');
+    
+    showToast('README descargado. Ahora haz clic en "Create repository" en GitHub.', 'info');
   }
 
   downloadReadme(projName) {
