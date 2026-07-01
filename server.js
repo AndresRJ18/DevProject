@@ -80,12 +80,13 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
 
             const payload = {
                 anthropic_version: "bedrock-2023-05-31",
-                max_tokens: 2500, // Menos tokens = respuesta mucho más rápida
+                max_tokens: 1500, // Menos tokens = respuesta mucho más rápida
+                temperature: 0.3, // Menos temperatura = generación más rápida y determinista
                 messages: [{ role: "user", content: prompt }]
             };
 
             const command = new InvokeModelCommand({
-                modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0", 
+                modelId: "us.anthropic.claude-3-haiku-20240307-v1:0", // Modelo extremadamente rápido 
                 contentType: "application/json",
                 accept: "application/json",
                 body: JSON.stringify(payload)
