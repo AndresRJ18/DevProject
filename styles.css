@@ -567,7 +567,7 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   margin: 0 auto;
 }
 
-.role-card, .level-card {
+.role-card, .level-card, .pill-button {
   padding: 0.85rem 1.8rem;
   display: flex;
   align-items: center;
@@ -578,19 +578,27 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   border-radius: 100px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: -0.2px;
 }
 
-.role-card:hover, .level-card:hover {
+.role-card:hover, .level-card:hover, .pill-button:hover {
   border-color: var(--text-muted);
   background: #111;
   transform: translateY(-2px);
 }
 
-.role-card.selected, .level-card.selected {
+.role-card.selected, .level-card.selected, .pill-button.special-pill {
   border-color: var(--card-color, var(--accent-indigo));
   color: white;
   box-shadow: 0 0 15px rgba(99,102,241,0.3), inset 0 0 10px rgba(99,102,241,0.1);
   animation: breathe 3s infinite ease-in-out;
+}
+
+.pill-button {
+  justify-content: center;
 }
 
 @keyframes breathe {

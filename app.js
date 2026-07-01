@@ -391,7 +391,6 @@ class WizardEngine {
   renderRoleStep(container) {
     container.innerHTML = `
       <h2 class="step-title">¿Qué rol profesional te interesa?</h2>
-      <p class="step-desc">Selecciona el puesto al que aspiras. Esto determinará los proyectos sugeridos.</p>
       <div class="roles-grid">
         ${roles.map(role => `
           <div class="role-card ${this.selectedRole === role.id ? 'selected' : ''}" 
@@ -404,7 +403,7 @@ class WizardEngine {
       </div>
       <div class="wizard-nav">
         <div></div>
-        <button class="btn btn-primary" onclick="wizard.nextStep()">
+        <button class="pill-button" onclick="wizard.nextStep()">
           Siguiente <i data-lucide="arrow-right"></i>
         </button>
       </div>
@@ -413,17 +412,17 @@ class WizardEngine {
 
   renderLevelStep(container) {
     const levels = [
-      { id: 'principiante', name: 'Principiante', icon: 'trending-up', desc: 'Estoy empezando, conozco los fundamentos básicos.', bars: 1 },
-      { id: 'intermedio', name: 'Intermedio', icon: 'zap', desc: 'Tengo experiencia con proyectos personales o académicos.', bars: 3 },
-      { id: 'avanzado', name: 'Avanzado', icon: 'award', desc: 'He trabajado en proyectos reales o tengo experiencia laboral.', bars: 5 }
+      { id: 'principiante', name: 'Principiante', icon: 'trending-up', color: '#10b981' },
+      { id: 'intermedio', name: 'Intermedio', icon: 'zap', color: '#f59e0b' },
+      { id: 'avanzado', name: 'Avanzado', icon: 'award', color: '#ef4444' }
     ];
 
     container.innerHTML = `
       <h2 class="step-title">¿Cuál es tu nivel de experiencia?</h2>
-      <p class="step-desc">Ajustaremos la dificultad de los proyectos según tu nivel.</p>
       <div class="levels-grid">
         ${levels.map(level => `
           <div class="level-card ${this.selectedLevel === level.id ? 'selected' : ''}" 
+               style="--card-color: ${level.color};"
                onclick="wizard.selectLevel('${level.id}')">
             <div class="level-icon"><i data-lucide="${level.icon}"></i></div>
             <div class="level-name">${level.name}</div>
@@ -431,8 +430,8 @@ class WizardEngine {
         `).join('')}
       </div>
       <div class="wizard-nav">
-        <button class="btn btn-ghost" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
-        <button class="btn btn-primary" onclick="wizard.nextStep()">Siguiente <i data-lucide="arrow-right"></i></button>
+        <button class="pill-button" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
+        <button class="pill-button" style="--card-color: var(--accent-indigo)" onclick="wizard.nextStep()">Siguiente <i data-lucide="arrow-right"></i></button>
       </div>
     `;
   }
@@ -443,7 +442,6 @@ class WizardEngine {
 
     container.innerHTML = `
       <h2 class="step-title">¿Qué habilidades quieres demostrar?</h2>
-      <p class="step-desc">Selecciona las skills de <strong>${role.name}</strong> que quieres practicar o mostrar en tu portafolio.</p>
       <div class="skills-container">
         <div class="skills-tags">
           ${role.skills.map(skill => `
@@ -458,8 +456,8 @@ class WizardEngine {
         </div>
       </div>
       <div class="wizard-nav">
-        <button class="btn btn-ghost" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
-        <button class="btn btn-primary btn-lg" onclick="wizard.nextStep()"><i data-lucide="sparkles"></i> Generar Proyectos</button>
+        <button class="pill-button" onclick="wizard.prevStep()"><i data-lucide="arrow-left"></i> Atrás</button>
+        <button class="pill-button special-pill" style="--card-color: var(--accent-cyan)" onclick="wizard.nextStep()"><i data-lucide="sparkles"></i> Generar Proyectos</button>
       </div>
     `;
   }
