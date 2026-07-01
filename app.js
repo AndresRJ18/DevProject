@@ -358,14 +358,16 @@ class WizardEngine {
   prevStep() { this.goToStep(this.currentStep - 1); }
 
   updateStepper() {
-    document.querySelectorAll('.wizard-step').forEach((el, i) => {
-      el.classList.remove('active', 'completed');
-      if (i < this.currentStep) el.classList.add('completed');
-      if (i === this.currentStep) el.classList.add('active');
-    });
-    document.querySelectorAll('.wizard-connector').forEach((el, i) => {
-      el.classList.toggle('filled', i < this.currentStep);
-    });
+    const laserBar = document.getElementById('laser-bar');
+    if (!laserBar) return;
+    
+    let progress = 0;
+    if (this.currentStep === 0) progress = 0;
+    else if (this.currentStep === 1) progress = 33;
+    else if (this.currentStep === 2) progress = 66;
+    else if (this.currentStep === 3) progress = 100;
+
+    laserBar.style.width = `${progress}%`;
   }
 
   renderStep(step) {
@@ -395,10 +397,8 @@ class WizardEngine {
           <div class="role-card ${this.selectedRole === role.id ? 'selected' : ''}" 
                style="--card-color: ${role.color};"
                onclick="wizard.selectRole('${role.id}')">
-            <div class="check-badge"><i data-lucide="check"></i></div>
             <div class="role-icon"><i data-lucide="${role.icon}"></i></div>
             <div class="role-name">${role.name}</div>
-            <div class="role-desc">${role.description}</div>
           </div>
         `).join('')}
       </div>
@@ -427,10 +427,6 @@ class WizardEngine {
                onclick="wizard.selectLevel('${level.id}')">
             <div class="level-icon"><i data-lucide="${level.icon}"></i></div>
             <div class="level-name">${level.name}</div>
-            <div class="level-desc">${level.desc}</div>
-            <div class="level-bar">
-              ${Array.from({ length: 5 }, (_, i) => `<div class="bar-seg ${i < level.bars ? 'filled' : ''}"></div>`).join('')}
-            </div>
           </div>
         `).join('')}
       </div>
