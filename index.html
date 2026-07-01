@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevProject Generator - Genera ideas de proyectos personalizados para tu portafolio profesional en Ingeniería Informática. Elige tu rol, nivel y skills para obtener proyectos con roadmap y pitch de entrevista.">
+  <meta name="keywords" content="generador proyectos, portafolio, ingeniería informática, desarrollo profesional, proyectos programación, CV tech">
+  <meta name="author" content="DevProject Generator MVP">
+  <meta name="theme-color" content="#0a0e1a">
+
+  <meta property="og:title" content="DevProject Generator - Proyectos para tu Portafolio Tech">
+  <meta property="og:description" content="Genera ideas de proyectos personalizados según tu rol objetivo, nivel y habilidades. Incluye roadmap paso a paso y pitch de entrevista.">
+  <meta property="og:type" content="website">
+
+  <title>DevProject Generator | Proyectos para tu Portafolio Profesional</title>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================= -->
+  <!-- NAVBAR -->
+  <!-- ============================================= -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i data-lucide="zap" width="28" height="28"></i>
+        <span class="logo-text">DevProject</span>
+      </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#features">Características</a>
+        <a href="#wizard">Generador</a>
+        <a href="#about">Acerca de</a>
+        <a href="#references">Referencias</a>
+        <a href="#wizard" class="nav-cta-btn" onclick="startWizard()">Empezar</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================= -->
+  <!-- HERO -->
+  <!-- ============================================= -->
+  <section class="hero section" id="hero">
+    <canvas class="hero-canvas" id="hero-canvas"></canvas>
+    <div class="hero-bg"></div>
+    <div class="hero-glow-blob blue"></div>
+    <div class="hero-glow-blob cyan"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          MVP — Desarrollo Profesional 1 · 2026
+        </div>
+
+        <h1>
+          Genera el proyecto<br>
+          <span class="gradient-text">perfecto para<br>tu portafolio</span>
+        </h1>
+
+        <p class="hero-desc">
+          ¿No sabes qué proyecto construir para tu CV? Selecciona tu rol objetivo, 
+          nivel y habilidades — te sugerimos proyectos con roadmap paso a paso 
+          y pitch listo para entrevistas.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="startWizard()">
+            ⚡ Generar Proyectos
+          </button>
+          <button class="btn btn-secondary btn-lg" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+            Saber más
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Roles Tech</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-value">25+</div>
+            <div class="stat-label">Proyectos</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Niveles</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image-container">
+        <div class="hero-image-frame">
+          <img src="hero_illustration.jpg" alt="Ilustración abstracta futurista de tecnología">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FEATURES -->
+  <!-- ============================================= -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">¿Cómo funciona?</h2>
+        <p class="section-subtitle">
+          En 3 simples pasos obtienes ideas de proyectos personalizados con todo lo que necesitas para empezar.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card glass reveal reveal-delay-1">
+          <div class="feat-icon"><i data-lucide="target"></i></div>
+          <h3 class="feat-title">1. Elige tu Rol</h3>
+          <p class="feat-desc">
+            Selecciona el puesto al que aspiras: Frontend, Backend, Data Engineer, DevOps, AI/ML, 
+            Mobile, Ciberseguridad o Fullstack.
+          </p>
+        </div>
+        <div class="feature-card glass reveal reveal-delay-2">
+          <div class="feature-card-glow"></div>
+          <div class="feat-icon"><i data-lucide="sliders"></i></div>
+          <h3 class="feat-title">2. Define tu Nivel</h3>
+          <p class="feat-desc">
+            Indica si eres principiante, intermedio o avanzado. Los proyectos se ajustan 
+            en complejidad y alcance a tu experiencia.
+          </p>
+        </div>
+        <div class="feature-card glass reveal reveal-delay-3">
+          <div class="feat-icon"><i data-lucide="sparkles"></i></div>
+          <h3 class="feat-title">3. Obtén Proyectos</h3>
+          <p class="feat-desc">
+            Recibe proyectos personalizados con stack técnico, roadmap de desarrollo, 
+            tiempo estimado y pitch listo para entrevistas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- WIZARD -->
+  <!-- ============================================= -->
+  <section class="wizard-section section hidden" id="wizard">
+    <div class="container">
+      <div class="wizard-wrapper">
+        <div class="wizard-progress" id="wizard-progress">
+          <div class="progress-step active" id="step-1-indicator">1</div>
+          <div class="progress-line" id="line-1"></div>
+          <div class="progress-step" id="step-2-indicator">2</div>
+          <div class="progress-line" id="line-2"></div>
+          <div class="progress-step" id="step-3-indicator">3</div>
+        </div>
+
+        <!-- Stepper -->
+        <div class="wizard-stepper">
+          <div class="wizard-step active">
+            <div class="step-number">1</div>
+            <span class="step-label">Rol</span>
+          </div>
+          <div class="wizard-connector"><div class="connector-fill"></div></div>
+          <div class="wizard-step">
+            <div class="step-number">2</div>
+            <span class="step-label">Nivel</span>
+          </div>
+          <div class="wizard-connector"><div class="connector-fill"></div></div>
+          <div class="wizard-step">
+            <div class="step-number">3</div>
+            <span class="step-label">Skills</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Content -->
+        <div class="wizard-step-content" id="wizard-content">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- RESULTS -->
+  <!-- ============================================= -->
+  <section class="results-section section hidden" id="results">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Proyectos Sugeridos</h2>
+        <p class="section-subtitle" id="results-info" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+          <!-- Rendered by JS -->
+        </p>
+      </div>
+
+      <div class="results-header">
+        <button class="btn btn-ghost btn-sm" onclick="wizard.reset()">
+          <i data-lucide="chevron-left"></i> Cambiar filtros
+        </button>
+        <div class="results-count">
+          Selecciona una tarjeta para ver el plan detallado del proyecto
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projects-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- ABOUT -->
+  <!-- ============================================= -->
+  <section class="about-section section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <h3>Sobre este Proyecto</h3>
+          <p>
+            <strong>DevProject Generator</strong> es un Producto Mínimo Viable (MVP) desarrollado como 
+            proyecto final del curso de <em>Desarrollo Profesional 1</em> (C1335) del Departamento 
+            Académico de Ingeniería.
+          </p>
+          <p>
+            Resuelve un problema real: los estudiantes de Ingeniería Informática 
+            <strong>no saben qué proyectos construir</strong> para destacar en su portafolio profesional 
+            y entrevistas de trabajo.
+          </p>
+          <p>
+            La herramienta genera ideas de proyectos personalizados según el rol objetivo del estudiante, 
+            su nivel de experiencia y las habilidades que desea demostrar, incluyendo un 
+            <strong>roadmap técnico</strong> y un <strong>pitch de entrevista</strong> listo para usar.
+          </p>
+        </div>
+
+        <div class="about-list reveal reveal-delay-2">
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Diseño centrado en el usuario (UCD)</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Desarrollado con asistencia de IA (Claude AI)</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>8 roles profesionales cubiertos</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Visualización interactiva de habilidades (Radar Chart)</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Exportador de README.md listo para GitHub</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Interfaz responsive sin dependencias pesadas</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Favoritos guardados localmente (localStorage)</span>
+          </div>
+          <div class="about-list-item">
+            <i data-lucide="check"></i>
+            <span>Sin backend — funciona 100% en el navegador</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- REFERENCES -->
+  <!-- ============================================= -->
+  <section class="section" id="references" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Referencias y Herramientas</h2>
+        <p class="section-subtitle">
+          Herramientas y recursos utilizados en el desarrollo de este MVP, citados en formato IEEE.
+        </p>
+      </div>
+
+      <div class="references-box glass">
+        <p class="ref-item"><strong>[1]</strong> Anthropic, "Claude AI Assistant," 2025. [Online]. Available: <a href="https://claude.ai" target="_blank">https://claude.ai</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[2]</strong> Google, "Antigravity - AI Coding Assistant," 2026. [Online]. Available: <a href="https://developers.google.com" target="_blank">https://developers.google.com</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[3]</strong> GitHub, "GitHub Copilot - AI Pair Programmer," 2025. [Online]. Available: <a href="https://github.com/features/copilot" target="_blank">https://github.com/features/copilot</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[4]</strong> roadmap.sh, "Developer Roadmaps - Community Driven Roadmaps," 2025. [Online]. Available: <a href="https://roadmap.sh" target="_blank">https://roadmap.sh</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[5]</strong> Mozilla Developer Network, "MDN Web Docs," 2025. [Online]. Available: <a href="https://developer.mozilla.org" target="_blank">https://developer.mozilla.org</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[6]</strong> Stack Overflow, "2025 Annual Developer Survey Results," 2025. [Online]. Available: <a href="https://survey.stackoverflow.co" target="_blank">https://survey.stackoverflow.co</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[7]</strong> Google Fonts, "Inter & Outfit Open Source Typefaces," 2025. [Online]. Available: <a href="https://fonts.google.com" target="_blank">https://fonts.google.com</a>. [Accessed: Jun. 28, 2026].</p>
+        <p class="ref-item"><strong>[8]</strong> Glassdoor, "Salary Data for Technology Roles - Latin America," 2025. [Online]. Available: <a href="https://www.glassdoor.com" target="_blank">https://www.glassdoor.com</a>. [Accessed: Jun. 28, 2026].</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FOOTER -->
+  <!-- ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-text">
+        © 2026 DevProject Generator — MVP Proyecto Final | Desarrollo Profesional 1 (C1335) | Departamento Académico de Ingeniería
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Inicio</a>
+        <a href="#features">Características</a>
+        <a href="#about">Acerca de</a>
+        <a href="#references">Referencias</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================= -->
+  <!-- MODAL -->
+  <!-- ============================================= -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-top-bar">
+        <div class="modal-top-info">
+          <div class="modal-top-icon" id="modal-top-icon"><i data-lucide="folder"></i></div>
+          <div class="modal-top-text">
+            <h2 id="modal-title">Proyecto</h2>
+            <p id="modal-subtitle">Detalle</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="projectGenerator.closeModal()" aria-label="Cerrar">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
