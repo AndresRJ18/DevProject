@@ -86,7 +86,7 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
             };
 
             const command = new InvokeModelCommand({
-                modelId: "us.anthropic.claude-3-haiku-20240307-v1:0", // Modelo extremadamente rápido 
+                modelId: "us.anthropic.claude-haiku-4-5-20251001-v1:0", // Claude 4.5 Haiku para máxima velocidad y calidad
                 contentType: "application/json",
                 accept: "application/json",
                 body: JSON.stringify(payload)
