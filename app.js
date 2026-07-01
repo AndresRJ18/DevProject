@@ -824,9 +824,6 @@ class ProjectGenerator {
             <button class="btn btn-ghost btn-sm" onclick="projectGenerator.copyReadme()">
               <i data-lucide="copy"></i> Copiar README
             </button>
-            <button class="btn btn-primary btn-sm" onclick="projectGenerator.downloadReadme('${proj.name}')">
-              <i data-lucide="download"></i> Descargar .md
-            </button>
           </div>
 
           <div style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
