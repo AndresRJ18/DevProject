@@ -324,6 +324,7 @@ class WizardEngine {
     this.selectedRole = null;
     this.selectedLevel = null;
     this.selectedSkills = [];
+    this.customSkills = [];
     this.themeColor = 'var(--accent-indigo)';
   }
 
@@ -441,19 +442,22 @@ class WizardEngine {
 
   renderSkillsStep(container) {
     const role = roles.find(r => r.id === this.selectedRole);
-    if (!role) return;
+    const allSkills = [...role.skills, ...this.customSkills];
 
     container.innerHTML = `
       <h2 class="step-title">¿Qué habilidades quieres demostrar?</h2>
       <div class="skills-container">
         <div class="skills-tags">
-          ${role.skills.map(skill => `
+          ${allSkills.map(skill => `
             <span class="skill-tag ${this.selectedSkills.includes(skill) ? 'selected' : ''}" 
                   style="--card-color: ${this.themeColor};"
                   onclick="wizard.toggleSkill('${skill}')">
               ${skill}
             </span>
           `).join('')}
+          <input type="text" class="skill-tag skill-input" 
+                 placeholder="+ Añadir otra..." 
+                 onkeydown="wizard.addCustomSkill(event, this)">
         </div>
         <div class="skills-count">
           <strong>${this.selectedSkills.length}</strong> habilidades seleccionadas
@@ -469,6 +473,7 @@ class WizardEngine {
   selectRole(roleId) {
     this.selectedRole = roleId;
     this.selectedSkills = [];
+    this.customSkills = [];
     const role = roles.find(r => r.id === roleId);
     if (role) {
       this.themeColor = role.color;
@@ -503,6 +508,22 @@ class WizardEngine {
 
     const countEl = document.querySelector('.skills-count strong');
     if (countEl) countEl.textContent = this.selectedSkills.length;
+  }
+
+  addCustomSkill(event, el) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const val = el.value.trim();
+      if (val && !this.selectedSkills.includes(val)) {
+        this.customSkills.push(val);
+        this.selectedSkills.push(val);
+        this.renderSkillsStep(document.getElementById('wizard-content'));
+        
+        // Focus the input again after re-render so they can add multiple easily
+        const input = document.querySelector('.skill-input');
+        if(input) input.focus();
+      }
+    }
   }
 
   generateProjects() {

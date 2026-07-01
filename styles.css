@@ -844,6 +844,22 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   animation: breathe 3s infinite ease-in-out;
 }
 
+input.skill-tag.skill-input {
+  outline: none;
+  font-family: inherit;
+  width: 140px;
+  text-align: center;
+  color: white;
+}
+input.skill-tag.skill-input::placeholder {
+  color: var(--text-muted);
+}
+input.skill-tag.skill-input:focus {
+  border-color: var(--text-muted);
+  background: #111;
+  width: 180px;
+}
+
 .skills-count {
   text-align: center; margin-top: 2rem;
   font-size: 0.9rem; color: var(--text-muted);
