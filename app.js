@@ -665,11 +665,6 @@ class ProjectGenerator {
         <div class="project-card" style="--project-color: ${role.color}; animation: staggerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s both;">
           <div class="project-card-header">
             <h3 class="project-card-title">${proj.name}</h3>
-            <button class="project-card-fav ${isFav ? 'active' : ''}" 
-                    onclick="event.stopPropagation(); projectGenerator.toggleFavorite('${proj.id}', this)"
-                    title="Guardar en favoritos">
-              <i data-lucide="star"></i>
-            </button>
           </div>
           <p class="project-card-desc">${proj.description}</p>
           <div class="project-card-tags">
@@ -706,20 +701,6 @@ class ProjectGenerator {
     }
     html += '</div>';
     return html;
-  }
-
-  toggleFavorite(projectId, btn) {
-    const idx = this.favorites.indexOf(projectId);
-    if (idx > -1) {
-      this.favorites.splice(idx, 1);
-      btn.classList.remove('active');
-      showToast('Eliminado de favoritos', 'info');
-    } else {
-      this.favorites.push(projectId);
-      btn.classList.add('active');
-      showToast('Proyecto guardado en favoritos', 'success');
-    }
-    localStorage.setItem('devgen-favorites', JSON.stringify(this.favorites));
   }
 
   showDetail(projectId) {
