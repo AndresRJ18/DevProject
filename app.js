@@ -551,38 +551,11 @@ class ProjectGenerator {
     `;
     
     grid.innerHTML = `
-      <div class="project-card glass-card skeleton-card" style="height: 350px; display: flex; flex-direction: column; gap: 1rem; border-color: var(--border-medium);">
-        <div class="skeleton-box" style="height: 28px; width: 70%;"></div>
-        <div class="skeleton-box" style="height: 20px; width: 40%; margin-bottom: 1rem;"></div>
-        <div class="skeleton-box" style="height: 80px; width: 100%;"></div>
-        <div style="flex: 1;"></div>
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-        </div>
-        <div class="skeleton-box" style="height: 40px; width: 100%; border-radius: var(--radius-md);"></div>
-      </div>
-      <div class="project-card glass-card skeleton-card" style="height: 350px; display: flex; flex-direction: column; gap: 1rem; border-color: var(--border-medium);">
-        <div class="skeleton-box" style="height: 28px; width: 80%;"></div>
-        <div class="skeleton-box" style="height: 20px; width: 50%; margin-bottom: 1rem;"></div>
-        <div class="skeleton-box" style="height: 80px; width: 100%;"></div>
-        <div style="flex: 1;"></div>
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-        </div>
-        <div class="skeleton-box" style="height: 40px; width: 100%; border-radius: var(--radius-md);"></div>
-      </div>
-      <div class="project-card glass-card skeleton-card" style="height: 350px; display: flex; flex-direction: column; gap: 1rem; border-color: var(--border-medium);">
-        <div class="skeleton-box" style="height: 28px; width: 60%;"></div>
-        <div class="skeleton-box" style="height: 20px; width: 30%; margin-bottom: 1rem;"></div>
-        <div class="skeleton-box" style="height: 80px; width: 100%;"></div>
-        <div style="flex: 1;"></div>
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-          <div class="skeleton-box" style="height: 24px; width: 60px; border-radius: 12px;"></div>
-        </div>
-        <div class="skeleton-box" style="height: 40px; width: 100%; border-radius: var(--radius-md);"></div>
+      <div style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; padding: 5rem 0;">
+        <i data-lucide="settings" style="width: 64px; height: 64px; color: var(--accent-indigo); animation: spinGear 3s linear infinite;"></i>
+        <h3 style="margin-top: 2rem; font-family: var(--font-heading); color: var(--text-primary); font-size: 1.3rem;">Construyendo Proyectos</h3>
+        <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 1rem;">Diseñando arquitectura y roadmap con IA...</p>
+        <style>@keyframes spinGear { to { transform: rotate(360deg); } }</style>
       </div>
     `;
     
