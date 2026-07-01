@@ -107,17 +107,10 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
             generateSingleProject(2),
             generateSingleProject(3)
         ]);
-            
             // 3. Guardar en Caché para futuras peticiones idénticas
             projectCache.set(cacheKey, projects);
             
             res.json(projects);
-        } catch (parseError) {
-            console.error("❌ Error parseando el JSON devuelto por Claude:");
-            console.error("Últimos 200 caracteres devueltos:", jsonString.substring(jsonString.length - 200));
-            throw parseError;
-        }
-
     } catch (error) {
         console.error("Error conectando a Bedrock:", error);
         res.status(500).json({ error: "Fallo al generar proyectos con AWS Bedrock", details: error.message });
