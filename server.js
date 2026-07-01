@@ -53,10 +53,15 @@ app.post('/api/generate', limiter, async (req, res) => {
         }
 
         const generateSingleProject = async (index) => {
+            const domains = ["Finanzas / Fintech / E-commerce", "Salud / Educación / Bienestar", "Logística / Herramientas para Desarrolladores / IA"];
+            const domain = domains[index - 1] || "Sector Libre";
+            
             const prompt = `Actúa como un reclutador experto en tecnología y arquitecto de software. 
 El usuario es un estudiante de Ingeniería Informática que quiere aplicar a un rol de "${role}", tiene un nivel de experiencia "${level}" y quiere demostrar específicamente estas habilidades: ${skills.join(', ')}.
 
-Genera EXACTAMENTE 1 idea de proyecto innovador (Enfoque variante #${index}), altamente profesional y único para su portafolio, que no sea típico (no to-do lists, no clones básicos).
+Genera EXACTAMENTE 1 idea de proyecto innovador altamente profesional y único para su portafolio.
+REQUISITO VITAL PARA VARIEDAD: Este proyecto DEBE pertenecer al sector o industria de: "${domain}". 
+No hagas el típico proyecto aburrido. Debe sonar como una startup real.
 
 REGLA CRÍTICA: Devuelve ÚNICAMENTE un objeto JSON válido, sin texto adicional antes o después (sin bloques de código markdown).
 Estructura OBLIGATORIA del JSON:
@@ -80,8 +85,8 @@ Asegúrate de NO usar comillas dobles sin escapar dentro de los textos y cierra 
 
             const payload = {
                 anthropic_version: "bedrock-2023-05-31",
-                max_tokens: 3500, // Aumentado para evitar que el JSON se corte a la mitad
-                temperature: 0.3,
+                max_tokens: 3500,
+                temperature: 0.7,
                 messages: [{ role: "user", content: prompt }]
             };
 

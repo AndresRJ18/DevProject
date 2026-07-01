@@ -574,11 +574,23 @@ class ProjectGenerator {
       <span>Generando ideas únicas con IA...</span>
     `;
     
+    const roasts = [
+      "Buscando proyectos que no rompan tu PC en producción...",
+      "Compilando ideas... y rezando para que no haya memory leaks.",
+      "Ajustando la dificultad. No llores si es muy difícil.",
+      "Generando código espagueti... es broma, buscando buenas prácticas.",
+      "Consultando con los dioses del código...",
+      "Preparando tu próximo ticket de JIRA...",
+      "Calculando el número exacto de bugs... esperemos que sean 0.",
+      "Descargando más RAM para tu cerebro..."
+    ];
+    const roastMsg = roasts[Math.floor(Math.random() * roasts.length)];
+
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; padding: 5rem 0;">
         <i data-lucide="settings" style="width: 64px; height: 64px; color: var(--accent-indigo); animation: spinGear 3s linear infinite;"></i>
-        <h3 style="margin-top: 2rem; font-family: var(--font-heading); color: var(--text-primary); font-size: 1.3rem;">Construyendo Proyectos</h3>
-        <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 1rem;">Diseñando arquitectura y roadmap con IA...</p>
+        <h3 style="margin-top: 2rem; font-family: var(--font-heading); color: var(--text-primary); font-size: 1.3rem;">Analizando tu Perfil...</h3>
+        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 1rem; font-style: italic;">"${roastMsg}"</p>
         <style>@keyframes spinGear { to { transform: rotate(360deg); } }</style>
       </div>
     `;
@@ -676,44 +688,173 @@ class ProjectGenerator {
     headerInfo.innerHTML = `
       <span style="display: inline-flex; align-items: center; gap: 0.25rem;"><i data-lucide="${role.icon}"></i> ${role.name}</span>
       <span style="color: var(--text-muted);">•</span>
-      <span>Nivel: ${level.charAt(0).toUpperCase() + level.slice(1)}</span>
-      <span style="color: var(--text-muted);">•</span>
-      <span>${this.results.length} proyectos sugeridos</span>
+      <span>IDE: Inicializado</span>
     `;
 
-    grid.innerHTML = this.results.map((proj, i) => {
-      const isFav = this.favorites.includes(proj.id);
-      const difficultyDots = this.getDifficultyDots(proj.difficulty);
-      
-      return `
-        <div class="project-card" style="--project-color: ${role.color}; animation: staggerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s both;">
-          <div class="project-card-header">
-            <h3 class="project-card-title">${proj.name}</h3>
+    // Quitar la clase de grid para el vscode
+    grid.style.display = 'block';
+
+    grid.innerHTML = `
+      <div class="vscode-window">
+        <div class="vscode-header">
+          <div class="vscode-buttons">
+            <span class="t-btn close"></span><span class="t-btn minimize"></span><span class="t-btn expand"></span>
           </div>
-          <p class="project-card-desc">${proj.description}</p>
-          <div class="project-card-tags">
-            ${proj.techStack.slice(0, 5).map(t => `<span class="project-tag">${t}</span>`).join('')}
+          <div class="vscode-tabs">
+            ${this.results.map((proj, i) => `
+              <div class="vscode-tab ${i === 0 ? 'active' : ''}" onclick="projectGenerator.switchTab(${i})">
+                <i data-lucide="file-code" style="width:14px;height:14px;color:var(--accent-cyan)"></i> proyecto_${i+1}.md
+              </div>
+            `).join('')}
           </div>
-          <div class="project-card-footer">
-            <div class="project-meta">
-              ${difficultyDots}
-              <span style="margin-left: 4px;">Dificultad ${proj.difficulty}/5</span>
-            </div>
-            <div class="project-meta">
-              <i data-lucide="clock"></i> ${proj.timeEstimate}
-            </div>
-          </div>
-          <button class="btn btn-secondary btn-sm" style="width: 100%; margin-top: 1.2rem; justify-content: center;" 
-                  onclick="projectGenerator.showDetail('${proj.id}')">
-            Detalles y Guías <i data-lucide="chevron-right"></i>
-          </button>
         </div>
-      `;
-    }).join('');
+        <div class="vscode-body">
+          <div class="vscode-sidebar">
+            <div class="vscode-sidebar-title">EXPLORADOR</div>
+            <div class="vscode-file"><i data-lucide="chevron-down" style="width:14px;height:14px"></i> DEVPROJECTS</div>
+            <div style="padding-left: 10px;">
+              ${this.results.map((proj, i) => `
+                <div class="vscode-file ${i === 0 ? 'active' : ''}" id="file-nav-${i}" onclick="projectGenerator.switchTab(${i})">
+                  <i data-lucide="file-text" style="width:14px;height:14px;color:var(--text-muted)"></i> proyecto_${i+1}.md
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="vscode-content" id="vscode-content">
+            ${this.renderVSCodeTabContent(this.results[0])}
+          </div>
+        </div>
+      </div>
+    `;
 
     if (window.lucide) {
       window.lucide.createIcons();
     }
+
+    setTimeout(() => {
+      this.drawRadarChart(this.results[0].radar || { coding: 70, arch: 70, uiux: 70, db: 70, devops: 70 });
+    }, 100);
+  }
+
+  switchTab(index) {
+    document.querySelectorAll('.vscode-tab').forEach((el, i) => el.classList.toggle('active', i === index));
+    document.querySelectorAll('.vscode-sidebar .vscode-file[id^="file-nav-"]').forEach((el, i) => el.classList.toggle('active', i === index));
+    
+    const content = document.getElementById('vscode-content');
+    content.innerHTML = this.renderVSCodeTabContent(this.results[index]);
+    
+    if (window.lucide) window.lucide.createIcons();
+
+    setTimeout(() => {
+      this.drawRadarChart(this.results[index].radar || { coding: 70, arch: 70, uiux: 70, db: 70, devops: 70 });
+    }, 100);
+  }
+
+  renderVSCodeTabContent(proj) {
+    const role = roles.find(r => proj.roles.includes(r.id)) || roles[0];
+    return `
+      <div class="md-content">
+        <h1 style="color: ${role.color}; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i data-lucide="${role.icon}" style="width:28px;height:28px"></i> ${proj.name}
+        </h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2.5rem; font-size: 1.05rem;">> ${proj.description}</p>
+        
+        <div class="modal-details-grid">
+          <!-- Columna Izquierda: Información de desarrollo -->
+          <div>
+            <!-- Stack -->
+            <div class="modal-section">
+              <div class="modal-section-label"><i data-lucide="terminal"></i> Arquitectura y Tecnologías</div>
+              <div class="stack-tags">
+                ${proj.techStack.map(t => `<span class="stack-tag">${t}</span>`).join('')}
+              </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="modal-section">
+              <div class="modal-section-label"><i data-lucide="map"></i> Roadmap de Construcción</div>
+              <div class="roadmap-timeline">
+                ${proj.phases.map((phase, i) => `
+                  <div class="timeline-phase">
+                    <div class="timeline-dot" style="background: ${role.color}; border-color: ${role.color}; color: white;">${i + 1}</div>
+                    <div class="timeline-phase-header">
+                      <div class="timeline-phase-name">${phase.name}</div>
+                      <span class="timeline-phase-duration">${phase.duration}</span>
+                    </div>
+                    <div class="timeline-tasks">
+                      ${phase.tasks.map(task => `<div class="timeline-task">${task}</div>`).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Guías profesionales y métricas -->
+          <div>
+            <!-- Stats -->
+            <div class="modal-section">
+              <div class="modal-section-label"><i data-lucide="info"></i> Información Operativa</div>
+              <div class="modal-stats">
+                <div class="modal-stat-box">
+                  <div class="stat-val">${proj.difficulty}/5</div>
+                  <div class="stat-lbl">Dificultad</div>
+                </div>
+                <div class="modal-stat-box">
+                  <div class="stat-val">${proj.timeEstimate}</div>
+                  <div class="stat-lbl">Tiempo</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Radar Chart Visual Balance -->
+            <div class="modal-section">
+              <div class="modal-section-label"><i data-lucide="activity"></i> Distribución de Habilidades</div>
+              <div class="skill-balance-box">
+                <div class="radar-chart-container">
+                  <canvas id="skillRadarCanvas" width="250" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Habilidades demostradas -->
+            <div class="modal-section">
+              <div class="modal-section-label"><i data-lucide="check-circle-2"></i> Lo que Demuestras</div>
+              <div class="stack-tags">
+                ${proj.skillsDemonstrated.map(s => `<span class="stack-tag" style="background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.16); color: var(--accent-emerald);">${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de Ancho Completo: Pitch de Entrevista -->
+        <div class="modal-section" style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 2rem;">
+          <div class="modal-section-label"><i data-lucide="message-square"></i> Pitch para Entrevistas</div>
+          <div class="pitch-box">
+            <p class="pitch-text" id="pitchText">"${proj.interviewPitch}"</p>
+            <div class="pitch-actions">
+              <button class="btn btn-ghost btn-sm" onclick="projectGenerator.copyPitch()">
+                <i data-lucide="copy"></i> Copiar Pitch
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Setup GitHub (Rediseñado) -->
+        <div class="github-export-banner" style="margin-top: 3rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-medium); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <img src="images/github.svg" alt="GitHub" style="width: 42px; height: 42px; filter: invert(1) opacity(0.8);">
+            <div>
+              <h4 style="margin: 0; color: var(--text-primary); font-size: 1.1rem; font-family: var(--font-heading); margin-bottom: 0.25rem;">Exportar Proyecto a GitHub</h4>
+              <p style="margin: 0; color: var(--text-muted); font-size: 0.85rem;">Se descargará el README oficial y se preparará tu repositorio.</p>
+            </div>
+          </div>
+          <button class="pill-button special-pill" id="btn-github-create" onclick="projectGenerator.createGithubRepo('${proj.id}')" style="--card-color: ${role.color}; padding: 0.6rem 1.5rem; margin: 0; white-space: nowrap;">
+            <i data-lucide="upload-cloud"></i> Exportar ahora
+          </button>
+        </div>
+      </div>
+    `;
   }
 
   getDifficultyDots(level) {
@@ -853,7 +994,7 @@ class ProjectGenerator {
           <div style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem;"><i data-lucide="github"></i> Setup Rápido de GitHub</p>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-               <button class="btn btn-primary btn-sm" id="btn-github-create" onclick="projectGenerator.createGithubRepo('${proj.name}')" style="white-space: nowrap; width: 100%; justify-content: center;">
+               <button class="btn btn-primary btn-sm" id="btn-github-create" onclick="projectGenerator.createGithubRepo('${proj.id}')" style="white-space: nowrap; width: 100%; justify-content: center;">
                  <i data-lucide="external-link"></i> Crear Repositorio Pre-llenado en GitHub
                </button>
             </div>
@@ -922,13 +1063,16 @@ ${proj.differentiators.map(d => `- ${d}`).join('\n')}
     });
   }
 
-  createGithubRepo(projName) {
+  createGithubRepo(projectId) {
+    const proj = this.results.find(p => p.id === projectId) || projectTemplates.find(p => p.id === projectId) || roles.map(r => generatePlaceholderProjects(r.id, 'intermedio')).flat().find(p => p.id === projectId);
+    if (!proj) return;
+
     // 1. Descargar el README automáticamente
-    this.downloadReadme(projName);
+    this.downloadReadme(proj);
     
-    // 2. Extraer descripción y acortar el nombre del repo (solo tomar antes de ':' o '-')
-    const descText = document.querySelector('.modal-desc').textContent.substring(0, 300);
-    const shortName = projName.split(/[:\-]/)[0].trim();
+    // 2. Extraer descripción y acortar el nombre del repo
+    const descText = proj.description.substring(0, 300);
+    const shortName = proj.name.split(/[:\-]/)[0].trim();
     const repoName = shortName.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     
     // 3. Abrir GitHub con URL pre-llenada
@@ -938,13 +1082,13 @@ ${proj.differentiators.map(d => `- ${d}`).join('\n')}
     showToast('README descargado. Ahora haz clic en "Create repository" en GitHub.', 'info');
   }
 
-  downloadReadme(projName) {
-    const text = document.getElementById('readmeContent').textContent;
+  downloadReadme(proj) {
+    const text = this.generateReadmeMarkdown(proj);
     const blob = new Blob([text], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `README-${projName.toLowerCase().replace(/\s+/g, '-')}.md`;
+    a.download = `README-${proj.name.toLowerCase().replace(/\s+/g, '-')}.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

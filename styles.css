@@ -731,77 +731,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
   margin: 0 auto;
 }
 
-.level-card {
-  padding: 2.25rem 1.75rem;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-glass-light);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-normal);
-}
-
-.level-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-indigo);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.level-card.selected {
-  border-color: var(--accent-indigo);
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: var(--shadow-glow);
-}
-
-.level-card .level-icon {
-  margin-bottom: 1.2rem;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--accent-indigo);
-}
-.level-card .level-icon svg {
-  width: 26px; height: 26px;
-}
-
-.level-card.selected .level-icon {
-  background: var(--gradient-primary);
-  color: white;
-}
-
-.level-card .level-name {
-  font-family: var(--font-heading); font-weight: 700;
-  font-size: 1.2rem; margin-bottom: 0.4rem;
-}
-
-.level-card .level-desc {
-  font-size: 0.85rem; color: var(--text-tertiary);
-  line-height: 1.5;
-}
-
-.level-card .level-bar {
-  display: flex; gap: 4px; justify-content: center;
-  margin-top: 1.25rem;
-}
-
-.level-card .level-bar .bar-seg {
-  width: 20px; height: 4px;
-  background: var(--border-medium);
-  border-radius: 2px;
-  transition: background var(--transition-normal);
-}
-
-.level-card .level-bar .bar-seg.filled {
-  background: var(--accent-indigo);
-}
-
-.level-card.selected .level-bar .bar-seg.filled {
-  background: var(--accent-cyan);
-}
 
 /* =====================================================
    SKILLS TAGS (Step 3)
@@ -1071,9 +1000,121 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
 }
+
+/* =====================================================
+   VS CODE MINI EDITOR UI
+   ===================================================== */
+.vscode-window {
+  background: #0d1117;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  margin-top: 1rem;
+}
+
+.vscode-header {
+  display: flex;
+  background: #161b22;
+  border-bottom: 1px solid var(--border-medium);
+  align-items: center;
+}
+
+.vscode-buttons {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.vscode-tabs {
+  display: flex;
+  overflow-x: auto;
+}
+
+.vscode-tab {
+  padding: 0.6rem 1.2rem;
+  background: #0d1117;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border-subtle);
+  border-top: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.vscode-tab:hover {
+  background: #161b22;
+}
+
+.vscode-tab.active {
+  color: var(--text-primary);
+  border-top: 1px solid var(--accent-indigo);
+  background: #0d1117;
+}
+
+.vscode-body {
+  display: flex;
+  flex: 1;
+}
+
+.vscode-sidebar {
+  width: 250px;
+  background: #161b22;
+  border-right: 1px solid var(--border-medium);
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vscode-sidebar-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0 1rem 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.vscode-file {
+  padding: 0.3rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.vscode-file:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.vscode-file.active {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-cyan);
+}
+
+.vscode-content {
+  flex: 1;
+  padding: 2rem;
+  background: #0d1117;
+  color: var(--text-primary);
+  overflow-y: auto;
+}
+
+.md-content h1 { font-size: 1.5rem; }
+.md-content h2 { font-size: 1.25rem; }
+.md-content h3 { font-size: 1.1rem; margin-top: 1.5rem; }
+.md-content p { font-size: 0.95rem; line-height: 1.6; }
 
 .progress-step {
   width: 30px;
@@ -1427,21 +1468,134 @@ section {
    FOOTER
    ===================================================== */
 .footer {
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--border-subtle);
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--border-medium);
   background: var(--bg-primary);
+  margin-top: 4rem;
 }
 
-.footer .container {
-  display: flex; align-items: center;
-  justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+.footer-creator-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
 }
 
-.footer-text { font-size: 0.85rem; color: var(--text-tertiary); font-weight: 500; }
+.creator-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
 
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a { font-size: 0.85rem; color: var(--text-tertiary); font-weight: 500; }
-.footer-links a:hover { color: var(--accent-cyan); }
+.creator-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.creator-info h4 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.creator-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.creator-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.creator-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.creator-link:hover {
+  color: var(--accent-indigo);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.creator-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.portfolio-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  color: var(--text-primary);
+}
+
+.portfolio-btn:hover {
+  background: var(--accent-indigo);
+  border-color: var(--accent-indigo);
+  color: white;
+}
+
+.link-tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.creator-link:hover .link-tooltip {
+  opacity: 1;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.85rem; 
+  color: var(--text-tertiary); 
+  font-weight: 500;
+}
 
 /* =====================================================
    TOAST NOTIFICATIONS
